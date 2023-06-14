@@ -15,9 +15,7 @@ public static class Startup
         services.AddDbContext<ApplicationDbContext>(options =>
         options.UseNpgsql(configuration.GetConnectionString("DbConnection")));
         services.AddScoped<IApplicationDbContext, ApplicationDbContext>();
-        services.AddScoped<IUserRepository, UserRepository>();
-        services.AddScoped<IQuestionRepository, QuestionRepository>();
-        services.AddScoped<IInnerCategoryRepository, InnerCategoryRepository>();
+        services.AddScoped<IUserRepository, UserRepository>();        
         services.AddScoped<IUserTokenRepository, UserTokenRepository>();
         services.AddScoped<IPermissionRepository,PermissionRepository>();        
         return services;

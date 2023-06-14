@@ -1,3 +1,6 @@
+using Application;
+using Infrastructure;
+
 namespace WebUI
 {
     public class Program
@@ -7,6 +10,8 @@ namespace WebUI
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
+            builder.Services.AddApplication();
+            builder.Services.AddInfrastructure(builder.Configuration);
             builder.Services.AddControllersWithViews();
 
             var app = builder.Build();
@@ -28,7 +33,7 @@ namespace WebUI
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
+                pattern: "{controller=User}/{action=Index}");
 
             app.Run();
         }

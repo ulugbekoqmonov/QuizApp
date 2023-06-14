@@ -15,7 +15,6 @@ public static class Startup
         services.AddScoped<IAuthenticationService, AuthenticationService>();
         services.AddAutoMapper(typeof(MapProfiles));
         services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
-        services.AddMediatR();
         return services;
     }
 }

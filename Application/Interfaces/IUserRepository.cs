@@ -5,5 +5,5 @@ namespace Application.Interfaces;
 
 public interface IUserRepository:IRepository<User>
 {
-    public Task<IQueryable<User>> GetAllAsync(Expression<Func<User, bool>>? expression = null);
+    public Task<IQueryable<User>> GetByFilteringAsync(Expression<Func<User, bool>> expression);
 }

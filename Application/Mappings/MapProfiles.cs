@@ -1,4 +1,4 @@
-﻿using Application.Products;
+﻿using Application.DataTransferObjects.User;
 using AutoMapper;
 using Domain.Models.Entities;
 
@@ -8,6 +8,6 @@ public class MapProfiles:Profile
 {
 	public MapProfiles()
 	{
-		CreateMap<CreateProductCommand,Product>().ReverseMap();
+		CreateMap<CreateUserDto,User>().ReverseMap();
 	}
 }

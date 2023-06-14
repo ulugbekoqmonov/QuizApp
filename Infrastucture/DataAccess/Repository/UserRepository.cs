@@ -1,4 +1,5 @@
 ﻿using Application.Abstraction;
+using Application.Exeptions;
 using Application.Extersion;
 using Application.Interfaces;
 using Domain.Models.Entities;
@@ -19,47 +20,67 @@ public class UserRepository : IUserRepository
 
     public async Task<User> CreateAsync(User entity)
     {
-        entity.Password = entity.Password.ComputeHash();
-        _dbContext.Users.Add(entity);
-        User? user = await _dbContext.Users.FirstOrDefaultAsync(u=>u.UserName== entity.UserName);
-        await _dbContext.SaveChangesAsync();
-        return user;
+        EntityEntry entry = _dbContext.Users.Add(entity);
+        if(entry.State is EntityState.Added)
+        {
+            await _dbContext.SaveChangesAsync();
+        }
+        return (User)entry.Entity;
     }
 
     public async Task<bool> DeleteAsync(Guid id)
     {
+        bool result = false;
         User? user = _dbContext.Users.FirstOrDefault(a => a.Id == id);
-        _dbContext.Users.Remove(user);
-        await _dbContext.SaveChangesAsync();        
-        return true;
+        if (user is not null)
+        {
+            var entry = _dbContext.Users.Remove(user);
+            result = entry.State == EntityState.Deleted;
+            await _dbContext.SaveChangesAsync();
+            return result;
+        }
+        else
+        {
+            throw new NotFoundExeption();
+        }
     }
 
     public Task<IQueryable<User>> GetAllAsync()
     {
-        IQueryable<User> queryable = _dbContext.Users;
-        return Task.FromResult(queryable);
+        IQueryable<User> users = _dbContext.Users;
+        return Task.FromResult(users);
     }
 
-    public Task<User?> GetByIdAsync(Guid id)
+    public async Task<User> GetByIdAsync(Guid id)
     {
-        User? account = _dbContext.Users.FirstOrDefault(x => x.Id == id);
-        return Task.FromResult(account);
+        User? user = await _dbContext.Users.FirstOrDefaultAsync(x => x.Id == id);
+        if (user is not null)
+        {
+            return user;
+        }
+        else
+        {
+            throw new NotFoundExeption();
+        }
     }
 
     public async Task<User> UpdateAsync(User entity)
     {
-        entity.Password = entity.Password.ComputeHash();
-       _dbContext.Users.Update(entity);
-        await _dbContext.SaveChangesAsync();
-        return entity;
+        EntityEntry entry = _dbContext.Users.Update(entity);
+        if (entry.State == EntityState.Modified)
+        {
+            await _dbContext.SaveChangesAsync();
+        }
+        return (User)entry.Entity;
     }
     public async Task<User?> GetAsync(Expression<Func<User, bool>> expression)
     {
         return await _dbContext.Users.FirstOrDefaultAsync(expression);
     }
 
-    public Task<IQueryable<User>> GetAllAsync(Expression<Func<User, bool>>? expression = null)
+    public Task<IQueryable<User>> GetByFilteringAsync(Expression<Func<User, bool>> expression)
     {
-        return Task.FromResult(_dbContext.Users.Where(expression));
+        IQueryable<User> users = _dbContext.Users.Where(expression);
+        return Task.FromResult(users);
     }
 }
