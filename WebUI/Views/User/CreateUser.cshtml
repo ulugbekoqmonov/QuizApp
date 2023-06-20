@@ -5,21 +5,41 @@
 <h2>Create User</h2>
 
 <form asp-action="CreateUser" method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"> </div>
     <div class="form-group">
-        <label for="UserName">Username:</label>
+        <label asp-for="FirstName">FirstName:</label>
+        <input type="text" class="form-control"  id="FirstName" name="FirstName" >
+        <span asp-validation-for="FirstName" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="LastName">LastName:</label>
+        <input type="text" class="form-control" id="LastName" name="LastName" required>
+        <span asp-validation-for=@Model.LastName class="text-danger"></span>
+    </div>    
+    <div class="form-group">
+        <label asp-for="UserName">UserName:</label>
         <input type="text" class="form-control" id="UserName" name="UserName" required>
+        <span asp-validation-for="UserName" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label for="Password">Password:</label>
+        <label asp-for="Password">Password:</label>
         <input type="password" class="form-control" id="Password" name="Password" required>
+        <span asp-validation-for="Password" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label for="Email">Email:</label>
+        <label asp-for="ConfirmPassword">ConfirmPassword</label>
+        <input type="password" class="form-control" id="ConfirmPassword" name="ConfirmPassword" required/>
+        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Email">Email:</label>
         <input type="email" class="form-control" id="Email" name="Email" >
+        <span asp-validation-for="Password" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label for="PhoneNumber">Phone Number:</label>
-        <input type="text" class="form-control" id="PhoneNumber" name="PhoneNumber" >
-    </div>
+        <label asp-for="PhoneNumber">Phone Number:</label>
+        <input type="text" class="form-control" maxlength = "14" id="PhoneNumber" name="PhoneNumber" >
+        <span asp-validation-for="Password" class="text-danger"></span>
+    </div>    
     <button type="submit" class="btn btn-primary">Create</button>
 </form>

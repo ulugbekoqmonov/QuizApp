@@ -3,18 +3,20 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Application.DataTransferObjects.User;
 
-public class CreateUserDto
+public class UpdateUserDto
 {
+    public Guid Id { get; set; }
+
     [Required(ErrorMessage = "FirstName is required.")]
-    [MinLength(3)]
+    [Range(3, 50)]
     public string? FirstName { get; set; }
 
     [Required(ErrorMessage = "LastName is required.")]
-    [MinLength(3)]
+    [Range(3, 50)]
     public string? LastName { get; set; }
 
     [Required(ErrorMessage = "UserName is required.")]
-    [StringLength(50,MinimumLength =3)]
+    [Range(3, 50)]
     public string? UserName { get; set; }
 
     private string _Password;
@@ -52,7 +54,7 @@ public class CreateUserDto
 
     [EmailAddress(ErrorMessage = "Invalid email address.")]
     public string? Email { get; set; }
-        
-    //[RegularExpression(@"^\+998\d{9}$", ErrorMessage = "Invalid phone number.")]
+    
+    [RegularExpression(@"^\+998\d{9}$", ErrorMessage = "Invalid phone number.")]
     public string? PhoneNumber { get; set; }
 }

@@ -1,2 +1,65 @@
-﻿
+﻿@model List<GetAllUsersDto>
 
+<!DOCTYPE html>
+<html>
+<head>
+    <title>All Users</title>
+    <link   rel="stylesheet" 
+            href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">        
+    <link   rel="stylesheet"    
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"    
+            integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" 
+            crossorigin="anonymous" 
+            referrerpolicy="no-referrer" />
+</head>
+<body>
+    <div class="container">
+        <h1>All Users</h1>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>FirstName</th>
+                    <th>LastName</th>
+                    <th>UserName</th>
+                    <th>Email</th>
+                    <th>Phone Number</th>
+                    <th>RoleId</th>
+                    <th>Delete</th>
+                    <th>Edit</th>
+                    <th>Details</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var user in Model)
+                {
+                    <tr>
+                        <td>@(user.FirstName)</td>
+                        <td>@(user.LastName)</td>
+                        <td>@(user.UserName)</td>
+                        <td>@(user.Email)</td>
+                        <td>@(user.PhoneNumber)</td>
+                        <td>@(user.RoleId)</td>
+                        <td>
+                            <form method="post" asp-action="User/DeleteUser/@user.Id">
+                                <button type="submit" class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
+                            </form>
+                        </td>
+                        <td>
+                            <form method="post" asp-action="EditUser">
+                                <button class="btn btn-primary edit-button"><i class="fa-solid fa-pen-to-square"></i></button>
+                            </form>
+                        </td>
+                        <td>
+                            <form method="get" asp-controller="User" asp-action="GetByIdUser">
+                            <input type="hidden" name="userId" value="@user.Id">
+                                <button class="btn btn-primary edit-button"><i class="fa-solid fa-circle-info"></i></button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -31,9 +31,9 @@ public class RoleRepository : IRoleRepository
         return true;
     }
 
-    public Task<IQueryable<Role>> GetAllAsync()
+    public Task<List<Role>> GetAllAsync()
     {
-        IQueryable<Role> queryable = _dbContext.Roles;
+        List<Role> queryable = _dbContext.Roles.ToList();
         return Task.FromResult(queryable);
     }
 

@@ -15,7 +15,7 @@ public class AuthenticationService : IAuthenticationService
 
     public async Task<bool> IsRegistered(UserCredential userCredential)
     {
-        IQueryable<User> accounts = await _accountRepository.GetAllAsync();
+        List<User> accounts = await _accountRepository.GetAllAsync();
         bool result = accounts.Any(acc => acc.UserName.Equals(userCredential.UserName) &&
         acc.Password.Equals(userCredential.Password));
         return result;

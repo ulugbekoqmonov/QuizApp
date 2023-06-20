@@ -1,6 +1,8 @@
 ﻿using Application.Abstraction;
 using Application.Interfaces;
+using Infrastructure.DataAccess.Interceptors;
 using Infrastructure.DataAccess.Repository;
+using Infrastructure.Services;
 using Infrastucture.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -17,7 +19,10 @@ public static class Startup
         services.AddScoped<IApplicationDbContext, ApplicationDbContext>();
         services.AddScoped<IUserRepository, UserRepository>();        
         services.AddScoped<IUserTokenRepository, UserTokenRepository>();
-        services.AddScoped<IPermissionRepository,PermissionRepository>();        
+        services.AddScoped<IPermissionRepository,PermissionRepository>();
+        services.AddScoped<AuditableEntitySaveChangesInterceptor>();
+        services.AddScoped<IDateTime,DateTimeService>();
+        
         return services;
     }
 }

@@ -45,9 +45,9 @@ public class UserRepository : IUserRepository
         }
     }
 
-    public Task<IQueryable<User>> GetAllAsync()
+    public Task<List<User>> GetAllAsync()
     {
-        IQueryable<User> users = _dbContext.Users;
+        List<User> users = _dbContext.Users.ToList();
         return Task.FromResult(users);
     }
 

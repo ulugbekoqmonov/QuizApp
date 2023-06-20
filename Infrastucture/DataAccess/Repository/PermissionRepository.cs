@@ -31,9 +31,9 @@ public class PermissionRepository : IPermissionRepository
         return true;
     }
 
-    public Task<IQueryable<Permission>> GetAllAsync()
+    public Task<List<Permission>> GetAllAsync()
     {
-        IQueryable<Permission> queryable = _dbContext.Permissions;
+        List<Permission> queryable = _dbContext.Permissions.ToList();
         return Task.FromResult(queryable);
     }
 
