@@ -1,4 +1,4 @@
-﻿@model GetAllUsersDto
+﻿@model GetByIdUserDto
 
 <!DOCTYPE html>
 <html>
@@ -17,8 +17,7 @@
                     <th>LastName</th>
                     <th>UserName</th>
                     <th>Email</th>
-                    <th>PhoneNumber</th>
-                    <th>Role Id</th>
+                    <th>PhoneNumber</th>                    
                 </tr>
             </thead>
             <tbody>
@@ -28,8 +27,7 @@
                     <td>@Model.LastName</td>
                     <td>@Model.UserName</td>
                     <td>@Model.Email</td>
-                    <td>@Model.PhoneNumber</td>
-                    <td>@Model.RoleId</td>
+                    <td>@Model.PhoneNumber</td>                   
                 </tr>
             </tbody>
         </table>

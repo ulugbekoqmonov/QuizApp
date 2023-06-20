@@ -10,9 +10,13 @@ public class MapProfiles:Profile
 	{
 		CreateMap<CreateUserDto, User>().ReverseMap()
             .ForMember(u => u.ConfirmPassword, op => op.Ignore());
+
 		CreateMap<GetAllUsersDto,User>().ReverseMap();
+
 		CreateMap<UpdateUserDto, User>().ReverseMap()
 			.ForMember(u => u.ConfirmPassword, op => op.Ignore());
+
+		CreateMap<GetByIdUserDto, User>().ReverseMap();
 
 	}
 }

@@ -52,12 +52,15 @@ namespace WebUI.Controllers
         public async Task<IActionResult> GetByIdUser(Guid userId)
         {
             User user = await _userRepository.GetByIdAsync(userId);
-            return View(user);
+            GetByIdUserDto userDto = _mapper.Map<GetByIdUserDto>(user);
+            return View(userDto);
         }
 
-        public ActionResult EditUser()
+        public async Task<IActionResult> EditUser(Guid userId)
         {
-            return View("UpdateUser", new UpdateUserDto());
+            User user = await _userRepository.GetByIdAsync(userId);
+            UpdateUserDto userDto = _mapper.Map<UpdateUserDto>(user);
+            return View("UpdateUser",userDto);
         }
 
         [HttpPost]
@@ -70,7 +73,7 @@ namespace WebUI.Controllers
             }
             return RedirectToAction(nameof(GetAllUsers));
         }
-        [HttpDelete]
+        [HttpPost]
         public async Task<IActionResult> DeleteUser(Guid userId)
         {
             await _userRepository.DeleteAsync(userId);

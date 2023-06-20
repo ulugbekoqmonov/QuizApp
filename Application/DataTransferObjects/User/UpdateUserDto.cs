@@ -8,15 +8,15 @@ public class UpdateUserDto
     public Guid Id { get; set; }
 
     [Required(ErrorMessage = "FirstName is required.")]
-    [Range(3, 50)]
+    [StringLength(maximumLength:50,MinimumLength = 3)]
     public string? FirstName { get; set; }
 
     [Required(ErrorMessage = "LastName is required.")]
-    [Range(3, 50)]
+    [StringLength(maximumLength: 50, MinimumLength = 3)]
     public string? LastName { get; set; }
 
     [Required(ErrorMessage = "UserName is required.")]
-    [Range(3, 50)]
+    [StringLength(maximumLength: 50, MinimumLength = 3)]
     public string? UserName { get; set; }
 
     private string _Password;
@@ -55,6 +55,6 @@ public class UpdateUserDto
     [EmailAddress(ErrorMessage = "Invalid email address.")]
     public string? Email { get; set; }
     
-    [RegularExpression(@"^\+998\d{9}$", ErrorMessage = "Invalid phone number.")]
+    //[RegularExpression(@"^\+998\d{9}$", ErrorMessage = "Invalid phone number.")]
     public string? PhoneNumber { get; set; }
 }

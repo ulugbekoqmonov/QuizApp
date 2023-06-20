@@ -31,7 +31,7 @@ public class UserRepository : IUserRepository
     public async Task<bool> DeleteAsync(Guid id)
     {
         bool result = false;
-        User? user = _dbContext.Users.FirstOrDefault(a => a.Id == id);
+        User? user = await _dbContext.Users.FirstOrDefaultAsync(a => a.Id == id);
         if (user is not null)
         {
             var entry = _dbContext.Users.Remove(user);

@@ -18,6 +18,7 @@
         <table class="table">
             <thead>
                 <tr>
+                    <th>Id</th>
                     <th>FirstName</th>
                     <th>LastName</th>
                     <th>UserName</th>
@@ -33,6 +34,7 @@
                 @foreach (var user in Model)
                 {
                     <tr>
+                        <td>@(user.Id)</td>
                         <td>@(user.FirstName)</td>
                         <td>@(user.LastName)</td>
                         <td>@(user.UserName)</td>
@@ -40,19 +42,21 @@
                         <td>@(user.PhoneNumber)</td>
                         <td>@(user.RoleId)</td>
                         <td>
-                            <form method="post" asp-action="User/DeleteUser/@user.Id">
+                            <form method="post" asp-action="DeleteUser">
+                                <input type="hidden" name="userId" value="@(user.Id)">
                                 <button type="submit" class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
                             </form>
                         </td>
                         <td>
                             <form method="post" asp-action="EditUser">
+                                <input type="hidden" name="userId" value="@(user.Id)">
                                 <button class="btn btn-primary edit-button"><i class="fa-solid fa-pen-to-square"></i></button>
                             </form>
                         </td>
                         <td>
-                            <form method="get" asp-controller="User" asp-action="GetByIdUser">
-                            <input type="hidden" name="userId" value="@user.Id">
-                                <button class="btn btn-primary edit-button"><i class="fa-solid fa-circle-info"></i></button>
+                            <form method="get" asp-action="GetByIdUser">
+                            <input type="hidden" name="userId" value="@(user.Id)">
+                                <button class="btn btn-primary details-button"><i class="fa-solid fa-circle-info"></i></button>
                             </form>
                         </td>
                     </tr>
