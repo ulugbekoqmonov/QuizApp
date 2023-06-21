@@ -20,7 +20,7 @@ namespace WebUI.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            return RedirectToAction(nameof(GetAllUsers));
+            return RedirectToAction(nameof(Login));
         }
         public ActionResult Login()
         {

@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230616141023_init")]
+    [Migration("20230620135342_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -124,9 +124,9 @@ namespace Infrastructure.Migrations
                         .HasMaxLength(64)
                         .HasColumnType("character varying(64)");
 
-                    b.Property<string>("Phone")
-                        .HasMaxLength(13)
-                        .HasColumnType("character varying(13)");
+                    b.Property<string>("PhoneNumber")
+                        .HasMaxLength(14)
+                        .HasColumnType("character varying(14)");
 
                     b.Property<Guid?>("RoleId")
                         .HasColumnType("uuid");
@@ -141,7 +141,7 @@ namespace Infrastructure.Migrations
                     b.HasIndex("Email")
                         .IsUnique();
 
-                    b.HasIndex("Phone")
+                    b.HasIndex("PhoneNumber")
                         .IsUnique();
 
                     b.HasIndex("RoleId");

@@ -10,6 +10,7 @@ public static class Startup
         services.AddScoped<ICurrentUserService,CurrentUserService>();
         services.AddHttpContextAccessor();
         services.AddControllersWithViews();
+        services.AddRazorPages();
 
         return services;
     }

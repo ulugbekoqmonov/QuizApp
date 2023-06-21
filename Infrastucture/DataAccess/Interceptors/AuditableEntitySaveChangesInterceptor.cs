@@ -1,6 +1,7 @@
 ﻿using Application.Interfaces;
 using Domain.Models.Common;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 
 namespace Infrastructure.DataAccess.Interceptors;
@@ -15,18 +16,20 @@ public class AuditableEntitySaveChangesInterceptor:SaveChangesInterceptor
         _currentUserService = currentUserService;
         _dateTime = dateTime;
     }
-    public override int SavedChanges(SaveChangesCompletedEventData eventData, int result)
+    public override InterceptionResult<int> SavingChanges(DbContextEventData eventData, InterceptionResult<int> result)
     {
-        UpdateEntites(eventData.Context);
-        return base.SavedChanges(eventData, result);
+        UpdateEntities(eventData.Context);
+
+        return base.SavingChanges(eventData, result);
     }
+    
     public override ValueTask<int> SavedChangesAsync(SaveChangesCompletedEventData eventData, int result, CancellationToken cancellationToken = default)
     {
-        UpdateEntites(eventData.Context);
+        UpdateEntities(eventData.Context);
         return base.SavedChangesAsync(eventData, result, cancellationToken);
     }
 
-    private void UpdateEntites(DbContext? context)
+    private void UpdateEntities(DbContext? context)
     {
         if(context == null)
         {
@@ -39,11 +42,20 @@ public class AuditableEntitySaveChangesInterceptor:SaveChangesInterceptor
                 entry.Entity.CreatedBy = _currentUserService.UserId;
                 entry.Entity.Created = _dateTime.Now;
             }
-            if(entry.State == EntityState.Added || entry.State == EntityState.Modified)
+            if(entry.State == EntityState.Added || entry.State == EntityState.Modified || entry.HasChangedOwnedEntities())
             {
                 entry.Entity.LastModifiedBy = _currentUserService.UserId;
                 entry.Entity.LastModified = _dateTime.Now;
             }
         }
     }
+}
+
+public static class Extensions
+{
+    public static bool HasChangedOwnedEntities(this EntityEntry entry) =>
+        entry.References.Any(r =>
+            r.TargetEntry != null &&
+            r.TargetEntry.Metadata.IsOwned() &&
+            (r.TargetEntry.State == EntityState.Added || r.TargetEntry.State == EntityState.Modified));
 }

@@ -15,7 +15,8 @@ public static class Startup
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddDbContext<ApplicationDbContext>(options =>
-        options.UseNpgsql(configuration.GetConnectionString("DbConnection")));
+        options.UseNpgsql(configuration.GetConnectionString("DbConnection"),
+        builder => builder.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
         services.AddScoped<IApplicationDbContext, ApplicationDbContext>();
         services.AddScoped<IUserRepository, UserRepository>();        
         services.AddScoped<IUserTokenRepository, UserTokenRepository>();

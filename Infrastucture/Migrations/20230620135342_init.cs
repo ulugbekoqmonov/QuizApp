@@ -91,7 +91,7 @@ namespace Infrastructure.Migrations
                     UserName = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
                     Password = table.Column<string>(type: "character varying(64)", maxLength: 64, nullable: false),
                     Email = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true),
-                    Phone = table.Column<string>(type: "character varying(13)", maxLength: 13, nullable: true),
+                    PhoneNumber = table.Column<string>(type: "character varying(14)", maxLength: 14, nullable: true),
                     RoleId = table.Column<Guid>(type: "uuid", nullable: true),
                     Created = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     CreatedBy = table.Column<string>(type: "text", nullable: true),
@@ -132,9 +132,9 @@ namespace Infrastructure.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Users_Phone",
+                name: "IX_Users_PhoneNumber",
                 table: "Users",
-                column: "Phone",
+                column: "PhoneNumber",
                 unique: true);
 
             migrationBuilder.CreateIndex(
